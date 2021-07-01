@@ -1,0 +1,47 @@
+
+
+mkdir workshop
+
+
+cd workshop
+
+git version
+
+git clone https://github.com/wonder-phil/RPi
+
+
+ls -lh RPi
+
+
+https://www.raspberrypi.org/software/operating-systems/ 
+
+
+
+
+
+
+cd ~/workshop/RPi
+
+
+qemu-img info 2021-01-11-raspios-buster-armhf-lite.img 
+
+
+qemu-img convert -f raw -O qcow2 2021-01-11-raspios-buster-armhf-lite.img   2021-01.qcow2
+
+
+
+qemu-img resize 2021-01.qcow2  +4G
+
+
+
+qemu-system-arm -M versatilepb \
+                     -cpu arm1176 \
+                     -m 256 -hda "./2021-01.qcow2" \
+                     -net nic -net user,hostfwd=tcp::5022-:22 \
+                     -dtb "./versatile-pb.dtb" \
+                     -kernel "./qemukernel" \
+                     -append "root=/dev/sda2 panic=1 rootfstype=ext4 rw" -no-reboot
+
+
+
+                         
